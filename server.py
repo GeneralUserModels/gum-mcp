@@ -1,7 +1,7 @@
 import os
 
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
@@ -47,7 +47,8 @@ async def get_user_context(
 
     Args:
         query: The user's query text (will be pre-processed by a lexical
-            retrieval model such as BM25).
+            retrieval model such as BM25). This can be empty, if there's nothing
+            specific. Mention specifics if possible.
         start_hh_mm_ago: **Lower bound** of the window, expressed as a string
             in the form ``"HH:MM"`` meaning "HH hours and MM minutes ago from
             now".  For example, ``"01:00"`` = one hour ago.  Pass ``None`` if no
