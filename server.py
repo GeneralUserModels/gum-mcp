@@ -38,7 +38,7 @@ mcp = FastMCP("gum", lifespan=app_lifespan)
 @mcp.tool()
 async def get_user_context(
     ctx: Context,
-    query: str,
+    query: Optional[str] = "",
     start_hh_mm_ago: Optional[str] = None,
     end_hh_mm_ago: Optional[str] = None,
 ) -> str:
@@ -46,9 +46,10 @@ async def get_user_context(
     Retrieve context for a user query within a time window.
 
     Args:
-        query: The user's query text (will be pre-processed by a lexical
-            retrieval model such as BM25). This can be empty, if there's nothing
-            specific. Mention specifics if possible.
+        query: The query text (will be pre-processed by a lexical
+            retrieval model such as BM25). This is OPTIONAL. If the user asks 
+            for something general (e.g. what am I doing), then you don't need 
+            to have a query. Otherwise, try to be specific.
         start_hh_mm_ago: **Lower bound** of the window, expressed as a string
             in the form ``"HH:MM"`` meaning "HH hours and MM minutes ago from
             now".  For example, ``"01:00"`` = one hour ago.  Pass ``None`` if no
