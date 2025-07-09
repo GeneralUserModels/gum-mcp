@@ -20,7 +20,7 @@ class AppContext:
 
 @asynccontextmanager
 async def app_lifespan(server: FastMCP) -> AsyncIterator[AppContext]:
-    gum_instance = gum(os.environ["GUM_USER_NAME"])
+    gum_instance = gum(os.environ["USER_NAME"])
 
     # NOTE: this doesn't listen to events- it just connects to the db
     # you'll need to start a seperate GUM listener to listen to Screen, for example-
@@ -48,8 +48,8 @@ async def get_user_context(
     Args:
         query: The query text (will be pre-processed by a lexical
             retrieval model such as BM25). This is OPTIONAL. If the user asks 
-            for something general (e.g. what am I doing), then you don't need 
-            to have a query. Otherwise, try to be specific.
+            for something general (e.g. what am I doing, help me now), 
+            then your query can be empty. Otherwise, try to be specific.
         start_hh_mm_ago: **Lower bound** of the window, expressed as a string
             in the form ``"HH:MM"`` meaning "HH hours and MM minutes ago from
             now".  For example, ``"01:00"`` = one hour ago.  Pass ``None`` if no

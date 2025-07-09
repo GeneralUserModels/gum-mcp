@@ -1,20 +1,26 @@
 # MCP for GUMs
 
-This is a basic instantiation of the Model Context Protocol, with GUMs! 
+First, you'll need to set up the GUM in general, and have it build some sense of your context. To do this, follow the instructions on [the front page of the docs here.](https://generalusermodels.github.io/gum/).
 
-Simply run the following commands:
+Once you're done with that, just clone this repo and run the following:
+
 ```bash
 > git clone git@github.com:GeneralUserModels/gum-mcp.git
 > cd gum-mcp
+> # maybe create a python environment :)
 > pip install --editable .
 ```
 
-Create a .env file with your environment variables. Either ```GUM_LM_API_BASE="gum-base-url"``` and ```SCREEN_LM_API_BASE="screen-base-url"```, if you're using an open source model _or_ ```OPENAI_API_KEY="api_key_here"``` if you're using OpenAI models.
+Create a .env file with your environment variables. All you need is a user name in the file (e.g.```USER_NAME="Omar Shaikh"```). In sum, the contents of your .env file looks something like this:
 
-Finally, install the MCP client:
+```bash
+USER_NAME="Omar Shaikh"
+```
+
+Finally, install the MCP client, pointing to the .env file:
 
 ```bash
 > mcp install server.py -f .env --with gum-ai
 ```
 
-The MCP should then be enabled in the Claude app.
+The MCP should then be enabled in the Claude app!
