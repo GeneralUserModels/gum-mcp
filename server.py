@@ -79,7 +79,8 @@ async def get_user_context(
     results = await gum_instance.query(
         query,
         start_time=start_time,
-        end_time=end_time
+        end_time=end_time,
+        limit=5
     )
 
     # Format results into a readable string
@@ -97,8 +98,8 @@ async def get_user_context(
                 prop_text += f"\n  Confidence: {proposition.confidence}"
             prop_text += f"\n  Relevance Score: {score:.2f}"
             
-            # Get and format related observations
-            observations = await get_related_observations(session, proposition.id)
+            # Get and format related observations- pull just 1
+            observations = await get_related_observations(session, proposition.id, limit=1)
             if observations:
                 prop_text += "\n  Supporting Observations:"
                 for obs in observations:
