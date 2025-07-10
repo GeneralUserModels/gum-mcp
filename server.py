@@ -1,15 +1,12 @@
 import os
 
-from dotenv import load_dotenv
-load_dotenv()
-
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from collections.abc import AsyncIterator
 
 from datetime import timedelta
 from typing import Optional
-from mcp.server.fastmcp import FastMCP, Context
+from mcp.server.fastmcp import FastMCP
 from datetime import datetime, timezone
 from gum import gum
 from gum.db_utils import get_related_observations
@@ -20,11 +17,11 @@ class AppContext:
 
 @asynccontextmanager
 async def app_lifespan(server: FastMCP) -> AsyncIterator[AppContext]:
-    gum_instance = gum(os.environ["USER_NAME"])
 
     # NOTE: this doesn't listen to events- it just connects to the db
     # you'll need to start a seperate GUM listener to listen to Screen, for example-
-    
+    gum_instance = gum(os.environ["USER_NAME"], None) # no model
+
     try:
         await gum_instance.connect_db()
     except Exception as e:
@@ -37,7 +34,6 @@ mcp = FastMCP("gum", lifespan=app_lifespan)
 
 @mcp.tool()
 async def get_user_context(
-    ctx: Context,
     query: Optional[str] = "",
     start_hh_mm_ago: Optional[str] = None,
     end_hh_mm_ago: Optional[str] = None,
@@ -52,15 +48,17 @@ async def get_user_context(
             then your query can be empty. Otherwise, try to be specific.
         start_hh_mm_ago: **Lower bound** of the window, expressed as a string
             in the form ``"HH:MM"`` meaning "HH hours and MM minutes ago from
-            now".  For example, ``"01:00"`` = one hour ago.  Pass ``None`` if no
-            lower bound is needed.
+            now".  For example, ``"01:00"`` = one hour ago. This is ALSO OPTIONAL.
+            If you don't need to specify a lower bound, pass ``None``.
         end_hh_mm_ago: **Upper bound** of the window, also a ``"HH:MM"`` string
-            relative to now (e.g., ``"00:10"`` = ten minutes ago).  Pass
-            ``None`` for an open-ended upper bound.
+            relative to now (e.g., ``"00:10"`` = ten minutes ago). This is ALSO OPTIONAL.
+            If you don't need to specify a upper bound, pass ``None``.
 
     Returns:
         A string containing the retrieved contextual information.
     """
+
+    ctx = mcp.get_context()
 
     # Convert time strings to datetime objects
     now = datetime.now(timezone.utc)

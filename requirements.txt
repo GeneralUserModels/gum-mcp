@@ -1,3 +1,2 @@
 gum-ai
 mcp[cli]
-dotenv
