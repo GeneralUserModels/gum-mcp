@@ -39,7 +39,8 @@ async def get_user_context(
     end_hh_mm_ago: Optional[str] = None,
 ) -> str:
     """
-    Retrieve context for a user query within a time window.
+    A tool to retrieve context for a user query within a time window.
+    Use this liberally, especiialy when something is underspecified or unclear.
 
     Args:
         query: The query text (will be pre-processed by a lexical
@@ -80,7 +81,7 @@ async def get_user_context(
         query,
         start_time=start_time,
         end_time=end_time,
-        limit=5
+        limit=3
     )
 
     # Format results into a readable string
