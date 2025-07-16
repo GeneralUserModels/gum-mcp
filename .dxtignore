@@ -1,0 +1,12 @@
+# ---- Environments & tooling -------------------------------------------
+.env
+.venv/
+venv/
+.idea/
+.vscode/
+.claude/
+__pycache__
+*.dxt
+
+# ---- macOS clutter -----------------------------------------------------
+.DS_Store

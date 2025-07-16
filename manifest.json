@@ -1,0 +1,49 @@
+{
+  "dxt_version": "0.1",
+  "name": "gumcp",
+  "version": "1.0.0",
+  "description": "An MCP that connects to the General User Model",
+  "author": {
+    "name": "Omar Shaikh",
+    "email": "oshaikh@stanford.edu"
+  },
+  "homepage": "https://generalusermodels.github.io/",
+  "documentation": "https://generalusermodels.github.io/gum/",
+  "server": {
+    "type": "python",
+    "entry_point": "server.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "mcp",
+        "--with",
+        "mcp[cli]",
+        "--with",
+        "gum-ai",
+        "mcp",
+        "run",
+        "${__dirname}/server.py"
+      ],
+      "env": {
+        "USER_NAME": "${user_config.user_name}"
+      }
+    }
+  },
+  "compatibility": {
+    "platforms": [
+      "darwin"
+    ]
+  },
+  "user_config": {
+    "user_name": {
+      "type": "string",
+      "title": "Full Name",
+      "description": "What's your full name?",
+      "required": true,
+      "sensitive": false
+    }
+  },
+  "license": "MIT"
+}

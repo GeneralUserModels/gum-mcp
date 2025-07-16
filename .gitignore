@@ -11,3 +11,4 @@ wheels/
 
 # Environment variables
 .env
+*.dxt
